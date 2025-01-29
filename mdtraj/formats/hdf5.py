@@ -285,7 +285,7 @@ class HDF5TrajectoryFile:
         topology = Topology()
 
         for chain_dict in sorted(topology_dict["chains"], key=operator.itemgetter("index")):
-            chain = topology.add_chain()
+            chain = topology.add_chain(chain_dict.get("chain_id"))
             for residue_dict in sorted(chain_dict["residues"], key=operator.itemgetter("index")):
                 try:
                     resSeq = residue_dict["resSeq"]
@@ -337,6 +337,7 @@ class HDF5TrajectoryFile:
                 chain_dict = {
                     "residues": [],
                     "index": int(chain.index),
+                    "chain_id": str(chain.chain_id),
                 }
                 for residue in chain.residues:
                     residue_dict = {
